@@ -50,8 +50,8 @@ pip install -r requirements.txt
 
 # Create .env file and add these variables
 OPENAI_API_KEY="your_openai_api_key_here"
-INJECTIVE_PRIVATE_KEY="your_injective_agent_private_key" # Optional for Celo demo
-INJECTIVE_ENVIRONMENT=testnet
+PRIVATE_KEY="your_agent_private_key" # all private keys may not work...so ask me for it
+ENVIRONMENT=testnet
 ```
 
 4. Running the agent

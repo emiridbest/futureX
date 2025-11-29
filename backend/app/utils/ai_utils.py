@@ -105,8 +105,8 @@ class InjectiveChatAgent:
         self, agent_id: str, private_key: str, environment: str = "testnet"
     ) -> None:
         """Initialize Injective clients if they don't exist"""
-        private_key = os.getenv("INJECTIVE_PRIVATE_KEY")
-        environment = os.getenv("INJECTIVE_ENVIRONMENT")
+        private_key = os.getenv("PRIVATE_KEY")
+        environment = os.getenv("ENVIRONMENT")
 
         print(private_key)
         print(environment)
