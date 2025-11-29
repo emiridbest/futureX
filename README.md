@@ -1,11 +1,11 @@
-# Tradi - AI Prediction Market Oracle
+# FutureX - AI Prediction Market Oracle
 
 **Submitted for the Celo Mobile Games & Prediction Markets Hackathon**
 
-Tradi is an advanced trading analysis multi-agent dApp combining AI and machine learning to deliver real-time market insights, technical analysis, and price predictions. It serves as a powerful **Oracle for Prediction Markets**, helping users make informed decisions on Celo-based prediction platforms.
+FutureX is an advanced trading analysis multi-agent dApp combining AI and machine learning to deliver real-time market insights, technical analysis, and price predictions. It serves as a powerful **Oracle for Prediction Markets**, helping users make informed decisions on Celo-based prediction platforms.
 
 ## Hackathon Track: Prediction Markets
-Tradi fits the **Prediction Markets** category by providing the essential data layer and probability assessments needed for successful prediction market participation. By leveraging AI models (Scikit-learn, TensorFlow) and real-time data, Tradi empowers users to predict crypto price movements with higher confidence.
+FutureX fits the **Prediction Markets** category by providing the essential data layer and probability assessments needed for successful prediction market participation. By leveraging AI models (Scikit-learn, TensorFlow) and real-time data, FutureX empowers users to predict crypto price movements with higher confidence.
 
 ## Key Features
 - **AI-Powered Predictions**: Machine learning models forecast price trends.
@@ -85,7 +85,7 @@ Visit `http://localhost:3000` in your web browser to access the application.
 ## MiniPay Integration (Planned)
 We are integrating Celo MiniPay to allow users to:
 - Pay for premium prediction insights using cUSD.
-- Place bets directly on Celo prediction markets based on Tradi insights.
+- Place bets directly on Celo prediction markets based on FutureX insights.
 
 ## Next Steps:
 - Incorporate and test live trading strategies
