@@ -39,3 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+CELO_INTEGRATION.md
+SUBMISSION_DETAILS.md
