@@ -4,7 +4,7 @@ numpy
 pandas
 matplotlib
 scikit-learn
-yfinance>=0.2.40
+yfinance==0.2.66
 python-dotenv
 openai
 werkzeug
