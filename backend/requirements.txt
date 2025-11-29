@@ -1,0 +1,17 @@
+flask
+flask-cors
+numpy
+pandas
+matplotlib
+scikit-learn
+yfinance>=0.2.40
+python-dotenv
+openai
+werkzeug
+keras
+injective-py
+hypercorn
+quart
+pyyaml
+requests
+gunicorn
