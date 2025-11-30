@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useChat } from 'ai/react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,18 +12,10 @@ import LoadingSpinner from './LoadingSpinner';
 import StockChart from './StockChart';
 import { stock } from '@/app/api';
 
-
-
-
 interface Analysis {
   response: string;
   session_id: string;
   symbol: string;
-}
-
-interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
 }
 
 const ChatInterface: React.FC = () => {
@@ -34,9 +27,13 @@ const ChatInterface: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [inputMessage, setInputMessage] = useState<string>('');
-  const [isChatLoading, setIsChatLoading] = useState<boolean>(false);
+
+  const { messages, input, handleInputChange, handleSubmit, setMessages, isLoading: isChatLoading } = useChat({
+    api: '/api/chat',
+    onError: (err) => {
+      setError(err.message);
+    }
+  });
 
   // Fetch stock data and generate analysis
   const analyze = async () => {
@@ -85,48 +82,15 @@ const ChatInterface: React.FC = () => {
       setSessionId(analysisResult.session_id);
 
       // Initialize chat with the analysis
-      setChatMessages([
+      setMessages([
         {
+          id: 'initial-analysis',
           role: 'assistant',
           content: analysisResult.response
         }
       ]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to analyze chart data');
-    }
-  };
-
-  // Send a chat message to the AI
-  const sendChatMessage = async () => {
-    if (!inputMessage.trim() || !sessionId) return;
-
-    // Add user message to chat
-    const userMessage = { role: 'user' as const, content: inputMessage };
-    setChatMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    setIsChatLoading(true);
-
-    try {
-      const response = await fetch('/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage.content,
-          session_id: sessionId,
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to get AI response');
-
-      const result = await response.json();
-      setChatMessages(prev => [...prev, { role: 'assistant', content: result.response }]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to communicate with AI');
-      setChatMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
-    } finally {
-      setIsChatLoading(false);
     }
   };
 
@@ -138,7 +102,7 @@ const ChatInterface: React.FC = () => {
       await fetch(`/clear?session_id=${sessionId}`, {
         method: 'POST',
       });
-      setChatMessages([]);
+      setMessages([]);
       setAnalysis(null);
       setSessionId(null);
     } catch (err) {
@@ -146,10 +110,15 @@ const ChatInterface: React.FC = () => {
     }
   };
 
+  // Wrapper to handle analysis flow
+  const handleAnalyze = async () => {
+    await clearChat();
+    await analyze();
+  };
+
   // Initial stock data fetch
   useEffect(() => {
-    clearChat();
-    analyze();
+    handleAnalyze();
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -200,7 +169,7 @@ const ChatInterface: React.FC = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Button onClick={clearChat} className="w-full" variant="default">
+              <Button onClick={handleAnalyze} className="w-full" variant="default">
                 <LineChart className="mr-2 h-4 w-4" /> Analyze
               </Button>
             </div>
@@ -244,9 +213,9 @@ const ChatInterface: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="h-[400px] overflow-y-auto border rounded-md p-4 space-y-4 mb-4">
-                {chatMessages.length > 0 ? (
-                  chatMessages.map((msg, index) => (
-                    <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                {messages.length > 0 ? (
+                  messages.map((msg) => (
+                    <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       <div
                         className={`max-w-[80%] rounded-lg p-3 ${msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
                           }`}
@@ -262,22 +231,21 @@ const ChatInterface: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex gap-2">
+              <form onSubmit={handleSubmit} className="flex gap-2">
                 <Input
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
+                  value={input}
+                  onChange={handleInputChange}
                   placeholder="Ask about the analyzed stock..."
-                  onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
                   disabled={!sessionId || isChatLoading}
                   className="flex-1"
                 />
-                <Button onClick={sendChatMessage} disabled={!sessionId || isChatLoading}>
+                <Button type="submit" disabled={!sessionId || isChatLoading}>
                   {isChatLoading ? <LoadingSpinner size="sm" /> : "Send"}
                 </Button>
-                <Button onClick={analyze} variant="outline" disabled={!sessionId}>
+                <Button type="button" onClick={clearChat} variant="outline" disabled={!sessionId}>
                   Clear
                 </Button>
-              </div>
+              </form>
             </CardContent>
           </Card>
         </TabsContent>

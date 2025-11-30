@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, Home, Info, LineChart, Menu, X } from 'lucide-react';
+import { BarChart3, Coins, Home, Info, LineChart, Menu, X } from 'lucide-react';
 import { ThemeSelector } from './ThemeSelector';
 import { MiniPayButton } from './MiniPayButton';
+import Chat from './Chat';
 
 // In your Navbar component:
 <div className="flex items-center space-x-2">
@@ -33,6 +34,7 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: <Home className="h-4 w-4" /> },
     { name: 'Analysis', path: '/analyze', icon: <LineChart className="h-4 w-4" /> },
     { name: 'Predictions', path: '/predict', icon: <BarChart3 className="h-4 w-4" /> },
+    { name: 'Trade', path: '/trade', icon: <Coins className="h-4 w-4" /> },
     { name: 'About', path: '/about', icon: <Info className="h-4 w-4" /> },
   ];
 

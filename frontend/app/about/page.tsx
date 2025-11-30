@@ -5,8 +5,8 @@ export default function AboutPage() {
         
         <div className="prose prose-stone max-w-none">
           <p>
-            Tradi is an AI-powered trading analysis platform designed to help traders make informed decisions.
-            By combining technical analysis with artificial intelligence, Tradi provides insights, predictions,
+           FutureX is an AI-powered trading analysis platform designed to help traders make informed decisions.
+            By combining technical analysis with artificial intelligence,FutureX provides insights, predictions,
             and recommendations for trading strategies.
           </p>
           
@@ -21,14 +21,14 @@ export default function AboutPage() {
           
           <h2>Technology Stack</h2>
           <p>
-            Tradi is built using modern technologies including Next.js, React, TypeScript, 
+           FutureX is built using modern technologies including Next.js, React, TypeScript, 
             Flask, Pandas, and various AI/ML libraries. The platform leverages advanced
             algorithms to analyze market data and generate predictions.
           </p>
           
           <h2>About the Team</h2>
           <p>
-            Tradi was developed by a team of financial experts and software engineers
+           FutureX was developed by a team of financial experts and software engineers
             passionate about making advanced trading analysis accessible to everyone.
           </p>
         </div>
