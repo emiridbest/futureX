@@ -239,8 +239,8 @@ const ChatInterface: React.FC = () => {
         <TabsContent value="chat" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Injective Chat Assistant</CardTitle>
-              <CardDescription>Chat with our AI about the analyzed stock and execute actions on Injective Chain</CardDescription>
+              <CardTitle>Celo Chat Assistant</CardTitle>
+              <CardDescription>Chat with our AI about the analyzed stock and execute actions on Celo Chain</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-[400px] overflow-y-auto border rounded-md p-4 space-y-4 mb-4">

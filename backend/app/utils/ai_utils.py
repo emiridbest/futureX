@@ -161,9 +161,9 @@ class InjectiveChatAgent:
             self.conversations[session_id].append({"role": "user", "content": message})
 
             # Build system message with token context if available
-            system_message = """You are a helpful AI assistant on Injective Chain. `{self.conversations[session_id]}` is the conversation history for this session.
+            system_message = """You are a helpful AI assistant on Celo Chain. `{self.conversations[session_id]}` is the conversation history for this session.
             You will be helping me make decisions on the analysis and predictions made by the other agent as it will be passed onto you.
-            You will be answering all things related to injective chain, and help out with
+            You will be answering all things related to celo chain, and help out with
             on-chain functions.
             
             When handling market IDs, always use these standardized formats:
