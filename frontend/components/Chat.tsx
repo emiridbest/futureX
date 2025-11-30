@@ -38,7 +38,7 @@ export default function Chat() {
 
     return (
         <div className="flex h-screen">
-            {/* Sidebar */}
+            {/* Sidebar 
             <div className="w-[20%] border-r border-black/100 dark:border-black/100 bg-black/100dark:bg-black/100">
                 <div className="p-4">
                     <Button 
@@ -69,7 +69,7 @@ export default function Chat() {
                     </div>
                 </div>
             </div>
-
+*/}
             {/* Main Chat Area */}
             <div className="flex-1 flex flex-col">
                 <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
