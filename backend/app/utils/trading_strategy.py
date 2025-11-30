@@ -51,7 +51,7 @@ def fetch_stock_data(symbol: str, timeframe: str, interval: str = 'hour') -> pd.
             days_limit = days
             
         # Handle cryptocurrency symbols
-        if symbol.upper() in ['BTC', 'ETH', 'DOGE', 'XRP', 'SOL']:
+        if symbol.upper() in ['BTC', 'ETH', 'DOGE', 'XRP', 'SOL', 'CELO']:
             symbol = f"{symbol}-USD"
             
         start_date = (end_date - pd.Timedelta(days=days_limit)).strftime('%Y-%m-%d')
