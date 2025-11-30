@@ -101,11 +101,22 @@ const walletClient = createWalletClient({
         }), balmy()],
     });
 
-
+    // Extract the initial analysis from the chat history to provide context
+    const analysisContext = Array.isArray(messages) ? messages.find((m: any) => m.role === 'assistant')?.content : null;
 
     const result = streamText({
         model: openai("gpt-4o-mini") as LanguageModelV1,
-        system: "You are a helpful agent that performs onchain transactions like sending celo,cusd, implement dolar-cost-averaging using balmy protocol, tokens etc and provides onchain advice based on data given",
+        system: `You are a helpful AI trading assistant and onchain agent.
+        
+        Your capabilities:
+        1. Analyze market data and trading signals provided in the chat history.
+        2. Perform onchain transactions on the Celo blockchain (sending tokens, DCA, etc.) using the provided tools.
+        3. Answer questions about the technical analysis and recommendations provided earlier in the conversation.
+        
+        ${analysisContext ? `CURRENT MARKET ANALYSIS CONTEXT:\n${analysisContext}\n\nUse the above analysis as the primary context when answering questions about "the response", "the analysis", or "what do you think".` : ''}
+        
+        If the user asks to perform an action (like "buy this token" or "send 5 USDC"), use the appropriate tool.
+        If the user asks for advice or clarification, use the provided analysis and your general knowledge.`,
         //@ts-ignore
         tools: tools,
         maxSteps: 20,

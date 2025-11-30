@@ -10,8 +10,21 @@ FutureX fits the **Prediction Markets** category by providing the essential data
 ## Key Features
 - **AI-Powered Predictions**: Machine learning models forecast price trends.
 - **Market Analysis**: Real-time technical analysis and sentiment analysis.
-- **Conversational AI**: Chat interface to query market data and predictions.
-- **MiniPay Ready**: Designed with a mobile-first approach, suitable for integration into MiniPay.
+- **Conversational AI Agent**: Chat interface powered by **GOAT SDK** and **Vercel AI SDK** to query market data and perform on-chain actions.
+- **On-Chain Actions**: Execute transactions directly from the chat (Send CELO/cUSD, DCA with Balmy, etc.).
+- **MiniPay Integrated**: Fully compatible with Opera MiniPay for a seamless mobile blockchain experience.
+- **Celo Blockchain**: Built on Celo for fast, low-cost transactions.
+
+## Technologies
+- **Frontend**: Next.js 14 (App Router), Tailwind CSS, Shadcn UI
+- **AI & Agents**: Vercel AI SDK, GOAT SDK (Great Onchain Agent Toolkit)
+- **Blockchain**: Celo (Testnet/Mainnet), Viem, Wagmi
+- **Plugins**: 
+  - `@goat-sdk/plugin-erc20` (Token transfers)
+  - `@goat-sdk/plugin-superfluid` (Streaming payments)
+  - `@goat-sdk/plugin-balmy` (DCA strategies)
+  - `@goat-sdk/plugin-allora` (AI Inference)
+- **Backend**: Python Flask (ML Models: Scikit-learn, TensorFlow)
 
 ## Project Structure
 
@@ -70,8 +83,15 @@ npm install
 ```
 
 6. Setup environment variables
--  Create .env file
-- Add NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:5000/api to .env file
+-  Create `.env` file in the `frontend` directory
+-  Add the following variables:
+   ```env
+   NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:5000
+   WALLET_PRIVATE_KEY="your_agent_wallet_private_key"
+   RPC_PROVIDER_URL="https://forno.celo.org" # or https://alfajores-forno.celo-testnet.org
+   ALLORA_API_KEY="your_allora_api_key"
+   OPENAI_API_KEY="your_openai_api_key"
+   ```
 
 7. Run react app
 
@@ -82,10 +102,11 @@ npm run dev
 
 Visit `http://localhost:3000` in your web browser to access the application.
 
-## MiniPay Integration (Planned)
-We are integrating Celo MiniPay to allow users to:
-- Pay for premium prediction insights using cUSD.
-- Place bets directly on Celo prediction markets based on FutureX insights.
+## Celo & MiniPay Integration
+FutureX is optimized for the Celo ecosystem and integrated with MiniPay:
+- **Connect Wallet**: Users can connect their MiniPay wallet directly via the UI.
+- **Agent Wallet**: The AI agent has its own server-side wallet to execute complex tasks on behalf of the user (with permissions).
+- **Token Support**: Native support for CELO, cUSD, and USDC.
 
 ## Next Steps:
 - Incorporate and test live trading strategies
