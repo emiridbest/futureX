@@ -26,14 +26,13 @@ const ChatInterface: React.FC = () => {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
-
   const { messages, input, handleInputChange, handleSubmit, setMessages, isLoading: isChatLoading } = useChat({
     api: '/api/chat',
     onError: (err) => {
       setError(err.message);
     }
   });
+  const [sessionId, setSessionId] = useState<string | null>(signals as string | null);
 
   // Fetch stock data and generate analysis
   const analyze = async () => {
