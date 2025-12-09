@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tradi - AI Trading Analysis",
+  title: "FutureX - AI Trading Analysis",
   description: "AI-powered trading analysis platform",
 };
 
