@@ -12,6 +12,7 @@
     "@ai-sdk/google": "^1.1.2",
     "@ai-sdk/openai": "^1.1.11",
     "@goat-sdk/adapter-vercel-ai": "^0.2.8",
+    "@divvi/referral-sdk": "^2.2.0",
     "@goat-sdk/core": "^0.4.6",
     "@goat-sdk/plugin-allora": "^0.1.4",
     "@goat-sdk/plugin-balmy": "^0.1.11",

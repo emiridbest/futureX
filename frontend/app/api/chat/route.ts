@@ -16,6 +16,8 @@ import { sendETH, } from "@goat-sdk/wallet-evm";
 import { balmy } from "@goat-sdk/plugin-balmy";
 import { allora } from "@goat-sdk/plugin-allora";
 import { NextResponse } from 'next/server';
+// @ts-ignore - Optional import
+import { esusu } from "@/agent/src";
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
@@ -53,7 +55,7 @@ const tokens: Token[] = [
     }
 ];
 export async function POST(req: Request) {
-    const { messages } = await req.json();
+    const { messages, userAddress } = await req.json();
 
     const privateKey = process.env.WALLET_PRIVATE_KEY;
     if (!privateKey) {
@@ -96,7 +98,7 @@ const walletClient = createWalletClient({
         //@ts-ignore
         wallet: viem(walletClient),
         //@ts-ignore
-        plugins: [sendETH(), erc20({ tokens }), superfluid(), allora({
+        plugins: [sendETH(), erc20({ tokens }), esusu(), superfluid(), allora({
             apiKey: process.env.ALLORA_API_KEY,
         }), balmy()],
     });
@@ -116,7 +118,18 @@ const walletClient = createWalletClient({
         ${analysisContext ? `CURRENT MARKET ANALYSIS CONTEXT:\n${analysisContext}\n\nUse the above analysis as the primary context when answering questions about "the response", "the analysis", or "what do you think".` : ''}
         
         If the user asks to perform an action (like "buy this token" or "send 5 USDC"), use the appropriate tool.
-        If the user asks for advice or clarification, use the provided analysis and your general knowledge.`,
+        If the user asks for advice or clarification, use the provided analysis and your general knowledge.
+        You are a helpful agent that performs onchain transactions like claiming usdt for users who are on minipay or celo for users who are not on minipay via the Esusu faucet on the Celo blockchain. The connected user's address is ${userAddress}.
+            Always ensure you are sending tokens to the correct address.
+                Never send tokens to any address other than ${userAddress}.
+                Always ensure you send only claim tokens to ${userAddress}.
+                Never sent tokens to yourself.
+                Never you confuse user address which is ${userAddress} with your own address which is ${account.address}.
+                Your address is only used to sign transactions.
+                Your address is not the recipient address for claimed tokens.
+                Your address is never the destination for claimed tokens.
+                If you are unsure about any request, ask for clarification instead of making assumptions.
+                Your address is ${account.address}, and you must not send claimed tokens to this address, and you must not confuse this address with ${userAddress}.`,
         //@ts-ignore
         tools: tools,
         maxSteps: 20,
