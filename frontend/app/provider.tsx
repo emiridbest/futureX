@@ -1,74 +1,34 @@
 "use client";
-import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
 import { RainbowKitProvider, connectorsForWallets } from "@rainbow-me/rainbowkit";
-import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
+import { injected } from 'wagmi/connectors'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider, createConfig, http } from "wagmi";
+import { WagmiConfig, createConfig } from "wagmi";
 import { ReactNode } from "react";
-//@ts-ignore
-import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
-
-const client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.mainnet,
-  apiKey: process.env.CHAINHOOKS_API_KEY,
-});
-
-async function manageChainhooks() {
-  try {
-    // Check API status
-    const status = await client.getStatus();
-    console.log('API Status:', status.status);
-    console.log('Server Version:', status.server_version);
-
-    // List all chainhooks
-    const { results, total } = await client.getChainhooks({ limit: 50 });
-    console.log(`Found ${total} chainhooks`);
-
-    // Get details of first chainhook
-    if (results.length > 0) {
-      const firstChainhook = await client.getChainhook(results[0].uuid);
-      console.log('First chainhook:', firstChainhook.definition.name);
-    }
-
-  } catch (error: any) {
-    console.error('Error managing chainhooks:', error.message);
-  }
-}
-manageChainhooks();
+import { createPublicClient, http } from "viem";
+import { celo } from "wagmi/chains";
 const queryClient = new QueryClient();
 
-const connectors : any = connectorsForWallets([
-  {
-    groupName: "Recommended",
-    wallets: [injectedWallet],
-  },
-], {
-  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
-  appName: "FutureX",
-});
 
-const config = createConfig({
-  chains: [Celo],
+export const config = createConfig({
+  chains: [celo],
+  connectors: [
+    injected(),
+  ],
   transports: {
-    [Celo.id]: http(),
+    [celo.id]: http('https://rpc.ankr.com/celo/e1b2a5b5b759bc650084fe69d99500e25299a5a994fed30fa313ae62b5306ee8', {
+      timeout: 30_000,
+      retryCount: 3,
+    }),
   },
-  connectors,
-});
-
-const appInfo = {
-  appName: "FutureX",
-};
-
+})
 
 export function AppProvider({ children }: { children: ReactNode }) {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
-    </WagmiProvider>
+    <WagmiConfig config={config}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+    </WagmiConfig>
   );
 }
 
-
-export default AppProvider;
