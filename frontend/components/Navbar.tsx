@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useContext } from "react";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BarChart3, Coins, Home, Info, LineChart, Menu, X } from 'lucide-react';
 import { ThemeSelector } from './ThemeSelector';
-import { MiniPayButton } from './MiniPayButton';
 import Chat from './Chat';
-
+import { Celo } from "@celo/rainbowkit-celo/chains";
+import { useConnect, useAccount } from "wagmi";
 // In your Navbar component:
 <div className="flex items-center space-x-2">
   <ThemeSelector />
@@ -24,7 +24,22 @@ const Navbar = () => {
     console.log(`Checking path: ${path}, result: ${active}`); // Add this for debugging
     return active;
   };
+  const { isConnected } = useAccount();
+ const { connect, connectors } = useConnect();
 
+  useEffect(() => {
+    // Only attempt to connect if not already connected
+    if (!isConnected && connectors.length > 0) {
+      try {
+        const connector = connectors.find((c) => c.id === "injected") || connectors[0];
+        if (connector) {
+          connect({ chainId: Celo.id, connector });
+        }
+      } catch (error) {
+        console.error("Connection error:", error);
+      }
+    }
+  }, [connect, isConnected, connectors]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -65,7 +80,6 @@ const Navbar = () => {
               </Link>
 
             ))}
-            <MiniPayButton />
             <ThemeSelector />
 
           </div>
@@ -106,5 +120,6 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 export default Navbar;

@@ -1,80 +1,62 @@
-js
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
-    './app/**/*.{js,jsx,ts,tsx}',
-    './components/**/*.{js,jsx,ts,tsx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        'inter': ['var(--font-inter)', 'sans-serif'],
+        'poppins': ['var(--font-poppins)', 'sans-serif'],
+        'roboto': ['var(--font-roboto)', 'sans-serif'],
+        'dancing': ['var(--font-dancing)', 'cursive'],
+        'caveat': ['var(--font-caveat)', 'cursive'],
+        'kalam': ['var(--font-kalam)', 'cursive'],
+      },
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        // Light theme
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: "#FFD100",
+          foreground: "#030303", 
         },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        success: {
-          DEFAULT: 'hsl(var(--success))',
-          foreground: 'hsl(var(--success-foreground))',
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          foreground: 'hsl(var(--warning-foreground))',
-        },
-        info: {
-          DEFAULT: 'hsl(var(--info))',
-          foreground: 'hsl(var(--info-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+        background: {
+          DEFAULT: "rgba(255, 255, 255, 0.9)",
+          foreground: "#030303",
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: "rgba(255, 255, 255, 0.7)", 
+          foreground: "#030303",
         },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+        // Dark theme 
+        "dark-primary": {
+          DEFAULT: "#f9fafa",
+          foreground: "#030303",
         },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      animation: {
-        'gradient': 'gradient-shift 5s ease infinite',
-        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        'gradient-shift': {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
+        "dark-background": {
+          DEFAULT: "rgba(15, 15, 15, 0.9)",
+          foreground: "#ffffff",
         },
-        'pulse-glow': {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.7 },
+        "dark-card": {
+          DEFAULT: "rgba(30, 30, 30, 0.7)", 
+          foreground: "#ffffff",
+        },
+        // Glassmorphism properties
+        glass: {
+          DEFAULT: "rgba(255, 255, 255, 0.2)",
+          dark: "rgba(0, 0, 0, 0.2)",
         },
       },
+      backdropFilter: {
+        'none': 'none',
+        'blur': 'blur(20px)',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      }
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
