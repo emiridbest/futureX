@@ -1,5 +1,4 @@
 "use client";
-import { RainbowKitProvider, connectorsForWallets } from "@rainbow-me/rainbowkit";
 import { injected } from 'wagmi/connectors'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiConfig, createConfig } from "wagmi";
