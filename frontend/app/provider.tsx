@@ -5,6 +5,7 @@ import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { ReactNode } from "react";
+//@ts-ignore
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -36,7 +37,7 @@ async function manageChainhooks() {
 manageChainhooks();
 const queryClient = new QueryClient();
 
-const connectors : any= connectorsForWallets([
+const connectors : any = connectorsForWallets([
   {
     groupName: "Recommended",
     wallets: [injectedWallet],
