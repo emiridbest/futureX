@@ -39,9 +39,12 @@ const queryClient = new QueryClient();
 const connectors : any= connectorsForWallets([
   {
     groupName: "Recommended",
-    wallets: [injectedWallet({ appName: "FutureX"})],
+    wallets: [injectedWallet],
   },
-]);
+], {
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
+  appName: "FutureX",
+});
 
 const config = createConfig({
   chains: [Celo],
