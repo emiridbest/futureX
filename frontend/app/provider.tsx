@@ -1,33 +1,47 @@
 "use client";
-import { injected } from 'wagmi/connectors'
+
+import { Core } from "@walletconnect/core";
+import { cookieStorage, createStorage } from "@wagmi/core";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { base } from "@reown/appkit/networks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiConfig, createConfig } from "wagmi";
-import { ReactNode } from "react";
-import { createPublicClient, http } from "viem";
-import { celo } from "wagmi/chains";
-const queryClient = new QueryClient();
+import { WagmiProvider, cookieToInitialState, type Config } from "wagmi";
 
-
-export const config = createConfig({
-  chains: [celo],
-  connectors: [
-    injected(),
-  ],
-  transports: {
-    [celo.id]: http('https://rpc.ankr.com/celo/e1b2a5b5b759bc650084fe69d99500e25299a5a994fed30fa313ae62b5306ee8', {
-      timeout: 30_000,
-      retryCount: 3,
-    }),
-  },
-})
-
-export function AppProvider({ children }: { children: ReactNode }) {
-  return (
-    <WagmiConfig config={config}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-    </WagmiConfig>
-  );
+// Get projectId from environment
+export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID;
+if (!projectId) {
+  throw new Error("Project ID is not defined");
 }
 
+// Create WalletConnect core
+const core = new Core({
+  projectId,
+});
+
+// Create the query client
+const queryClient = new QueryClient();
+
+// Create Wagmi Adapter with WalletConnect
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage
+  }),
+  ssr: true,
+  projectId,
+  networks: [base] 
+})
+
+// Export the config for other components
+export const config = wagmiAdapter.wagmiConfig;
+
+export function AppProvider({ children, cookies }: { children: React.ReactNode, cookies?: string | null }) {
+  const initialState = cookies ? cookieToInitialState(config as Config, cookies) : undefined;
+
+  return (
+    <WagmiProvider config={config as Config} initialState={initialState}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}

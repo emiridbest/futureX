@@ -207,7 +207,7 @@ const ChatInterface: React.FC = () => {
         <TabsContent value="chat" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Celo Chat Assistant</CardTitle>
+              <CardTitle>Base Chat Assistant</CardTitle>
               <CardDescription>Chat with our AI about the analyzed stock and execute actions on Celo Chain</CardDescription>
             </CardHeader>
             <CardContent>
