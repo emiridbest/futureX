@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BarChart3, Coins, Home, Info, LineChart, Menu, X } from 'lucide-react';
 import { ThemeSelector } from './ThemeSelector';
+import { base } from "viem/chains";
 import Chat from './Chat';
-import { Celo } from "@celo/rainbowkit-celo/chains";
 import { useConnect, useAccount } from "wagmi";
 // In your Navbar component:
 <div className="flex items-center space-x-2">
@@ -33,7 +33,7 @@ const Navbar = () => {
       try {
         const connector = connectors.find((c) => c.id === "injected") || connectors[0];
         if (connector) {
-          connect({ chainId: Celo.id, connector });
+          connect({ chainId: base.id, connector });
         }
       } catch (error) {
         console.error("Connection error:", error);
